@@ -1,0 +1,10 @@
+crc==7.1.0
+matplotlib==3.7.1
+numpy==1.24.3
+Pillow==10.0.0
+pysoem==1.0.1
+pyserial==3.5
+bota-driver==1.1.5
+typing==3.7.4.3
+tk==0.1.0
+simple-pid==2.0.1

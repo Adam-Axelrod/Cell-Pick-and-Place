@@ -1,0 +1,35 @@
+{
+    "driver_config": {
+        "product_name": "BFT-MIPS-ENET-CG",
+        "serial_number": "SN001000",
+        "communication_interface_name": "Bota_Socket",
+        "communication_interface_params": {
+            "sensor_ip_address": "172.168.9.178",
+            "udp_broadcast_port": 30305,
+            "network_interface": "\\Device\\NPF_{5B3AA405-D0C6-4437-BA19-3E24880E0B91}"
+        },
+        "sensor_operation_params": {
+            "app_mode": 2,
+            "app_submode": 10,
+            "wrench_offset": {
+                "fx": 0.0,
+                "fy": 0.0,
+                "fz": 0.0,
+                "tx": 0.0,
+                "ty": 0.0,
+                "tz": 0.0
+            },
+            "temperature_coefficients": {
+                "fx": 0.0,
+                "fy": 0.0,
+                "fz": 0.0,
+                "tx": 0.0,
+                "ty": 0.0,
+                "tz": 0.0
+            }
+        },
+        "driver_operation_params": {
+            "runtime_verbosity": false
+        }
+    }
+}
