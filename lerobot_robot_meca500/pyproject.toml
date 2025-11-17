@@ -1,0 +1,12 @@
+[project]
+name = "lerobot_robot_meca500"
+version = "0.0.1"
+dependencies = [
+    "lerobot",
+    "mecademicpy",
+    # "my_force_sensor_lib" # Add your force sensor lib here
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

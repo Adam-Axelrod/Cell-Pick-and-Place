@@ -1,0 +1,4 @@
+Metadata-Version: 2.4
+Name: lerobot_teleoperator_hand_guidance
+Version: 0.0.1
+Requires-Dist: lerobot
