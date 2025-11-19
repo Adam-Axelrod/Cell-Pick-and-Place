@@ -76,7 +76,8 @@ class main():
             else:
                 print("Error", "Comm type not supported!")
                 return False
-            self.sensor = bota_driver.BotaDriver(self.sensor_config_path)
+            #self.sensor = bota_driver.BotaDriver(self.sensor_config_path)
+            self.sensor = bota_driver.BotaDriver("C:/Users/aa24/PhD/Cell-Pick-and-Place/lerobot_robot_meca500/lerobot_robot_meca500/sensor_config.json")
 
             # Transition driver from UNCONFIGURED to INACTIVE state
             if not self.sensor.configure():

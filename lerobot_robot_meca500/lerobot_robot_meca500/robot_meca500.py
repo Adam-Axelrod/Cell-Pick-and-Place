@@ -1,9 +1,10 @@
 import mecademicpy.robot as robot
-# TODO: Import your force sensor library
+import bota_driver
 
 from lerobot.robots.robot import Robot
 from .config_meca500 import Meca500CustomConfig
 
+@Robot.register_subclass("meca500_custom")
 class Meca500Custom(Robot):
     # Tell lerobot which config class to use
     config_class = Meca500CustomConfig
@@ -30,36 +31,36 @@ class Meca500Custom(Robot):
             
             # Apply the calibration settings from adams_functions.py
             print("Calibrating robot reference frames...")
-            self.robot.SetTrf(193.448,-110.25,40.076,0,0,-30)
-            self.robot.SetWrf(263.999238, 44.275, 158.61405, 0, 0, 0)
+            #self.robot.SetTrf(193.448,-110.25,40.076,0,0,-30)
+            #self.robot.SetWrf(263.999238, 44.275, 158.61405, 0, 0, 0)
             print("Calibration complete.")
 
         except robot.MecademicException as e:
             print(f"An error occurred during robot initialization: {e}")
             raise
 
-        # TODO: Add your 6-DOF force sensor connection code here
-        self.force_sensor = None # Placeholder
-        # Example:
-        # try:
-        #     self.force_sensor = my_force_sensor_lib.Sensor(port="/dev/ttyUSB0")
-        # except Exception as e:
-        #     print(f"Failed to connect to force sensor: {e}")
-        #     self.force_sensor = None
+        print(f"Connecting to force sensor at COM4...")
+        try:
+            self.force_sensor = bota_driver.BotaDriver(self.config.sensor_config_path)
+        except Exception as e:
+            print(f"Failed to connect to force sensor: {e}")
+            self.force_sensor = None
 
         print("Hardware connected successfully.")
 
     def get_observation(self):
         # Get joint_angles from self.robot.GetJoints()
         # GetJoints() returns a tuple of 6 joint angles
-        joint_angles = self.robot.GetJoints()
-
-        # TODO: Get force_data from self.force_sensor.read()
-        force_data = [0.0] * 6 # Placeholder: [fx, fy, fz, tx, ty, tz]
+        joint_angles = self.robot.GetRtTargetJointPos()
+        # Get force data from the force sensor
+        force_data = [0.0] * 6  # Default to zeros
 
         if self.force_sensor:
             try:
-                force_data = self.force_sensor.read()
+                data = self.force_sensor.read_frame()
+                force_data[0:3] = data.force
+                force_data[3:] = data.torque
+
             except Exception as e:
                 print(f"Warning: Could not read from force sensor: {e}")
                 force_data = [0.0] * 6 # Return zeros on error
@@ -92,17 +93,17 @@ class Meca500Custom(Robot):
         # Disconnect Meca500
         try:
             if self.robot.IsConnected():
-                self.robot.DeactivateRobot()
                 self.robot.Disconnect()
+                self.robot.WaitDisconnected()
                 print("Meca500 disconnected.")
         except robot.MecademicException as e:
             print(f"An error occurred during Meca500 deactivation: {e}")
 
         # Disconnect force sensor
-        # TODO: Add your force sensor disconnection code
         if self.force_sensor:
             try:
-                self.force_sensor.close()
+                self.force_sensor.deactivate()
+                self.force_sensor.shutdown()
                 print("Force sensor disconnected.")
             except Exception as e:
                 print(f"An error occurred during force sensor disconnection: {e}")

@@ -10,3 +10,5 @@ class Meca500CustomConfig(RobotConfig):
     ip_address: str = "192.168.0.100"
     # We can also define the camera names lerobot should expect
     camera_names: list[str] = ("overhead_camera", "wrist_camera", "microscope_feed")
+    
+    sensor_config_path: str = "C:/Users/aa24/PhD/Cell-Pick-and-Place/lerobot_robot_meca500/lerobot_robot_meca500/sensor_config.json"
