@@ -3,3 +3,4 @@ Name: lerobot_robot_meca500
 Version: 0.0.1
 Requires-Dist: lerobot
 Requires-Dist: mecademicpy
+Requires-Dist: bota_driver
