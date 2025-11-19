@@ -1,5 +1,5 @@
 [project]
-name = "lerobot_teleoperator_hand_guidance"
+name = "lerobot-teleoperator-hand-guidance"
 version = "0.0.1"
 dependencies = ["lerobot"]
 
