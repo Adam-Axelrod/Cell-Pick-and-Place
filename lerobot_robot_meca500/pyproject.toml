@@ -7,6 +7,9 @@ dependencies = [
     "bota_driver"
 ]
 
+[project.entry-points."lerobot.robots"]
+meca500_custom = "lerobot_robot_meca500:Meca500Custom"
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"

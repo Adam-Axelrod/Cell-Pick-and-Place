@@ -1,2 +1,4 @@
-from .config_hand_guidance import HandGuidanceCustomConfig
-from .teleop_hand_guidance import HandGuidanceCustom
+from .config_hand_guidance_custom import HandGuidanceCustomConfig
+from .hand_guidance_custom import HandGuidanceCustom
+
+__all__ = ["HandGuidanceCustom", "HandGuidanceCustomConfig"]

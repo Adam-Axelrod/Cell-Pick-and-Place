@@ -1,0 +1,2 @@
+[lerobot.robots]
+meca500_custom = lerobot_robot_meca500:Meca500Custom

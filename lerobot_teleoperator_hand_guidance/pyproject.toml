@@ -3,6 +3,9 @@ name = "lerobot-teleoperator-hand-guidance"
 version = "0.0.1"
 dependencies = ["lerobot"]
 
+[project.entry-points."lerobot.teleoperators"]
+hand_guidance_custom = "lerobot_teleoperator_hand_guidance:HandGuidanceCustom"
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"

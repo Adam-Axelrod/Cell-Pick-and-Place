@@ -1,0 +1,2 @@
+[lerobot.teleoperators]
+hand_guidance_custom = lerobot_teleoperator_hand_guidance:HandGuidanceCustom
