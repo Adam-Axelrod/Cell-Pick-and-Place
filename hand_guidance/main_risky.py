@@ -12,7 +12,6 @@ class main():
     def __init__(self):
         self.sensor: bota_driver.BotaDriver | None = None
         self.robot = mdr.Robot()
-        self.sensor_config_path = None
         self.json_path = "bota_sensor_config.json"
         self.sensor_config_params = dict()
         self.sensor_config_params["update_rate"] = 800 # Hz, default value
@@ -27,17 +26,16 @@ class main():
         self._thread = None
         self.hg = None
 
-        # Hand guidance parameters (Ported from your hand_guidance.py)
-        self.gain_tr = 10
-        self.gain_rot = 50
+        # Hand guidance parameters (Ported from hand_guidance.py)
+        self.gain_tr = 10 #10
+        self.gain_rot = 50  #50
         self.f_threshold_high = 0.5
         self.f_threshold_low = 0.1
         self.m_threshold_high = 0.05
         self.m_threshold_low = 0.01
         
         self.wrench_filter = np.zeros(6)
-        self.alpha = 0.1 # Simple low pass filter factor
-
+        self.alpha = 0.1 #  0.1 Simple low pass filter factor
 
     def start_robot(self):
         try:
@@ -63,8 +61,8 @@ class main():
         self.sensor = None
         try:
             # Load sensor config
-            self.sensor_config_path = self.read_json(self.json_path)
-            self.sensor = bota_driver.BotaDriver(self.sensor_config_path)
+            config_content = self.read_json(self.json_path)
+            self.sensor = bota_driver.BotaDriver(self.json_path)
 
             # Transition driver from UNCONFIGURED to INACTIVE state
             if not self.sensor.configure():
@@ -86,22 +84,22 @@ class main():
     
     def _guidance_loop(self):
         """Runs the high-frequency force control loop."""
-        self.sensor.set_config_param("update_rate", 800)
-        self.sensor.set_config_param("filter_cutoff", 50)
+        #self.sensor.set_config_param("update_rate", 800)
+        #self.sensor.set_config_param("filter_cutoff", 50)
         
         while self._running:
             # Read sensor
             frame_data = self.sensor.read_frame()
-            if frame_data and frame_data.status == bota_driver.Status.VALID:
+            if frame_data: # and frame_data.status == bota_driver.Status.VALID:
                 wrench = np.array([
-                    frame_data.forces[0], frame_data.forces[1], frame_data.forces[2],
-                    frame_data.torques[0], frame_data.torques[1], frame_data.torques[2]
+                    frame_data.force[0], frame_data.force[1], frame_data.force[2],
+                    frame_data.torque[0], frame_data.torque[1], frame_data.torque[2]
                 ])
                 
                 # Filter
                 self.wrench_filter = (1 - self.alpha) * self.wrench_filter + self.alpha * wrench
                 
-                # Logic from your script (simplified for brevity)
+                # Logic from script
                 normF = np.linalg.norm(self.wrench_filter[:3])
                 normM = np.linalg.norm(self.wrench_filter[3:])
                 
@@ -118,8 +116,8 @@ class main():
                 # Send Velocity to Robot
                 # MoveLinVelWrf expects: x, y, z, wx, wy, wz
                 self.robot.MoveLinVelWrf(
-                    twist[0], twist[1], twist[2], 
-                    twist[3], twist[4], twist[5]
+                    twist[0], -twist[1], -twist[2], 
+                    twist[3], -twist[4], -twist[5]
                 )
             
             time.sleep(0.002) # ~500Hz loop

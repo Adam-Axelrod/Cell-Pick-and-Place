@@ -11,7 +11,6 @@ class main():
     def __init__(self):
         self.sensor: bota_driver.BotaDriver | None = None
         self.meca_robot = mdr.Robot()
-        self.sensor_config_path = None
         self.json_path = "bota_sensor_config.json"
         self.sensor_config_params = dict()
         self.sensor_config_params["update_rate"] = 800 # Hz, default value
@@ -49,8 +48,8 @@ class main():
         self.sensor = None
         try:
             # Load sensor config
-            self.sensor_config_path = self.read_json(self.json_path)
-            self.sensor = bota_driver.BotaDriver(self.sensor_config_path)
+            config_content = self.read_json(self.json_path)
+            self.sensor = bota_driver.BotaDriver(self.json_path)
 
             # Transition driver from UNCONFIGURED to INACTIVE state
             if not self.sensor.configure():
