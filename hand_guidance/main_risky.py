@@ -110,7 +110,7 @@ class main():
                      twist[:3] = self.gain_tr * self.wrench_filter[:3]
                 
                 # Rotation
-                if normF > self.m_threshold_high:
+                if normM > self.m_threshold_high:
                      twist[3:] = self.gain_rot * self.wrench_filter[3:]
 
                 # Send Velocity to Robot
