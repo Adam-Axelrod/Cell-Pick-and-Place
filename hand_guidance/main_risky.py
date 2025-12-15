@@ -115,9 +115,9 @@ class main():
 
                 # Send Velocity to Robot
                 # MoveLinVelWrf expects: x, y, z, wx, wy, wz
-                self.robot.MoveLinVelWrf(
-                    twist[0], -twist[1], -twist[2], 
-                    twist[3], -twist[4], -twist[5]
+                self.robot.MoveLinVelTrf(
+                    -twist[0], -twist[1], twist[2], 
+                    -twist[3], -twist[4], twist[5]
                 )
             
             time.sleep(0.002) # ~500Hz loop
