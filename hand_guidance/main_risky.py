@@ -16,11 +16,11 @@ class main():
         self.sensor_connected: bool = False
         self.meca_connected: bool = False
 
-        self.meca_address = "192.168.0.100" # Default IP address for Mecademic robot
+        self.meca_address = "192.168.0.100" # testing
 
         self.json_path = "bota_sensor_config.json"
         self.sensor_type = "Bota_Binary_gen0"
-        self.port = "COM4"  # Default port for serial connection
+        self.port = "COM4"  # Second change from the feature branch
         
         self._running = False
         self._thread = None
