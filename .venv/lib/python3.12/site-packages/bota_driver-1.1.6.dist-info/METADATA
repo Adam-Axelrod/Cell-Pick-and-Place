@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: bota-driver
+Version: 1.1.6
+Summary: Python binding for the Bota Driver C++ library
+Author-Email: Raul Cruz-Oliver <support@botasys.com>
+Classifier: License :: OSI Approved :: BSD License
+Project-URL: Homepage, https://botasys.com
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# Bota Driver Python bindings
+
+Python binding for the Bota Driver C++ library.
+
+For more information about the Bota Driver Python API, please refer to the [Bota Driver documentation](https://code.botasys.com/en/gen_a/layer1/driver/driver_py.html).
+
+For an usage example, please refer to the following repository: [bota_driver_py_example](https://gitlab.com/botasys/drivers/bota_driver_py_example).
+
+For a general start guideline with Bota Systems Force Torque sensors, please refer to the [Bota Systems startpage](https://shop.botasys.com/start).
