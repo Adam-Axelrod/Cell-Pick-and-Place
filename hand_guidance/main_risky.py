@@ -142,16 +142,12 @@ class main():
         except Exception:
             sampling_period = None
 
-        #self.hg = hand_guidance.HandGuidance(self.sensor, self.meca_robot, sampling_period)
-        self.hg = self._guidance_loop
-
         try:
            self._running = True
            self._thread = threading.Thread(target=self._guidance_loop, daemon=True)
            self._thread.start()
         except Exception as e:
             print("Error", f"HandGuidance failed to start: {e}")
-            self.hg = None
             return False
         return True
     
@@ -163,9 +159,6 @@ class main():
                 self._thread.join(timeout=1.0)
                 self._thread = None
 
-            if self.hg is not None:
-                print("  Stopping hand guidance module...")
-                self.hg = None
             
             if self.sensor_connected and self.sensor is not None:
                 print("  Deactivating and shutting down sensor...")
