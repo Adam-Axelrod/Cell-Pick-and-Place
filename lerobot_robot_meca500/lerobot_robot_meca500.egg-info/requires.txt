@@ -1,3 +1,0 @@
-lerobot
-mecademicpy
-bota_driver

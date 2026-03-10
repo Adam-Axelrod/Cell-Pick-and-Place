@@ -10,7 +10,7 @@ import time
 from multiprocessing import Event
 from threading import Thread
 
-from task import Task
+from archive.task import Task
 
 
 class HandGuidance(Task):
