@@ -20,7 +20,7 @@ class main():
 
         self.json_path = "bota_sensor_config.json"
         self.sensor_type = "Bota_Binary_gen0"
-        self.port = "COM4"  # and this!
+        self.port = "COM3"  # and this!
         
         self._running = False
         self._thread = None
@@ -39,6 +39,7 @@ class main():
 
     def start_robot(self):
         try:
+            print("Activating robot...")
             self.robot.Connect(address=self.meca_address)
             self.robot.ResetError()
             self.robot.ActivateAndHome()
@@ -127,12 +128,18 @@ class main():
             self.robot.Disconnect()
             self.robot.WaitDisconnected()
 
-        if not self.start_sensor():
-            return False
-
+        # 1. START THE ROBOT FIRST
+        print("Starting robot...")
         self.start_robot()
         if not self.meca_connected:
             return False
+
+        # 2. START THE SENSOR SECOND
+        # Now that the robot is homed and ready, activate the sensor.
+        print("Starting sensor...")
+        if not self.start_sensor():
+            return False
+
         # pass sampling_period (seconds) computed from the configured update rate if available
         sampling_period = None
         try:
@@ -143,6 +150,7 @@ class main():
             sampling_period = None
 
         try:
+           # 3. IMMEDIATELY START THE LOOP
            self._running = True
            self._thread = threading.Thread(target=self._guidance_loop, daemon=True)
            self._thread.start()
